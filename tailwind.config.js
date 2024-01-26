@@ -9,7 +9,8 @@ export default {
         35: "repeat(35, minmax(0, 1fr))",
       },
       fontFamily: {
-        "press-start": ['"Press Start 2P"', "cursive"],
+        press: ['"Press Start 2P"', "cursive"],
+        vt323: ["VT323", "monospace"],
       },
     },
   },

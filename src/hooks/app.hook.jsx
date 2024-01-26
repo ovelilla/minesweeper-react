@@ -6,7 +6,10 @@ import AppHandlers from "../handlers/app.handlers";
 const AppHook = () => {
   const [board, setBoard] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
   const [level, setLevel] = useState(0);
+  const [timer, setTimer] = useState(0);
+  const [win, setWin] = useState(false);
 
   const {
     handleCellClick,
@@ -16,10 +19,14 @@ const AppHook = () => {
   } = AppHandlers({
     board,
     gameOver,
+    intervalId,
     level,
     setBoard,
     setGameOver,
+    setIntervalId,
     setLevel,
+    setTimer,
+    setWin,
   });
 
   useEffect(() => {
@@ -35,6 +42,8 @@ const AppHook = () => {
     handleFetchBoard,
     handleLevelClick,
     level,
+    timer,
+    win,
   };
 };
 

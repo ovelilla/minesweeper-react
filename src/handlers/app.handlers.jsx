@@ -17,33 +17,69 @@ const fetchBoardHandler = async ({ level, setBoard, setGameOver }) => {
   }
 };
 
-const cellClickHandler = ({ board, cell, gameOver, setBoard, setGameOver }) => {
+const cellClickHandler = ({
+  board,
+  cell,
+  gameOver,
+  intervalId,
+  setBoard,
+  setGameOver,
+  setIntervalId,
+  setTimer,
+  setWin,
+}) => {
   if (gameOver || !board) return;
 
   try {
     board.defuse(cell.row, cell.column);
     setBoard({ ...board });
 
+    if (!intervalId) {
+      const intervalId = setInterval(() => {
+        setTimer((timer) => timer + 1);
+      }, 1000);
+      setIntervalId(intervalId);
+    }
+
     if (board.checkWin()) {
-      console.log("¡Ganaste el juego!");
+      clearInterval(intervalId);
+      setWin(true);
     }
   } catch (error) {
     board.exploded(cell.row, cell.column);
     setGameOver(true);
-    console.error(error);
+    clearInterval(intervalId);
   }
 };
 
-const cellRightClickHandler = ({ e, board, cell, gameOver, setBoard }) => {
+const cellRightClickHandler = ({
+  e,
+  board,
+  cell,
+  gameOver,
+  intervalId,
+  setBoard,
+  setIntervalId,
+  setTimer,
+  setWin,
+}) => {
   e.preventDefault();
 
   if (gameOver || !board) return;
+
+  if (!intervalId) {
+    const intervalId = setInterval(() => {
+      setTimer((timer) => timer + 1);
+    }, 1000);
+    setIntervalId(intervalId);
+  }
 
   board.flag(cell.row, cell.column);
   setBoard({ ...board });
 
   if (board.checkWin()) {
-    console.log("¡Ganaste el juego!");
+    clearInterval(intervalId);
+    setWin(true);
   }
 };
 
@@ -56,16 +92,40 @@ const levelClickHandler = ({ level, setBoard, setGameOver, setLevel }) => {
 const AppHandlers = ({
   board,
   gameOver,
+  intervalId,
   level,
   setBoard,
   setGameOver,
+  setIntervalId,
   setLevel,
+  setTimer,
+  setWin,
 }) => {
   return {
     handleCellClick: (cell) =>
-      cellClickHandler({ board, cell, gameOver, setBoard, setGameOver }),
+      cellClickHandler({
+        board,
+        cell,
+        gameOver,
+        intervalId,
+        setBoard,
+        setGameOver,
+        setIntervalId,
+        setTimer,
+        setWin,
+      }),
     handleCellRightClick: (e, cell) =>
-      cellRightClickHandler({ e, board, cell, gameOver, setBoard }),
+      cellRightClickHandler({
+        e,
+        board,
+        cell,
+        gameOver,
+        intervalId,
+        setBoard,
+        setIntervalId,
+        setTimer,
+        setWin,
+      }),
     handleFetchBoard: () => fetchBoardHandler({ level, setBoard, setGameOver }),
     handleLevelClick: () =>
       levelClickHandler({ level, setBoard, setGameOver, setLevel }),

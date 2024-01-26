@@ -1,7 +1,9 @@
 // Components
-import Board from "./components/Board";
-import Header from "./components/Header";
-import LineSeparator from "./components/LineSeparator";
+import Board from "./components/board.component";
+import GameOver from "./components/game-over.component";
+import Header from "./components/header.component";
+import LineSeparator from "./components/line-separator.component";
+import Win from "./components/win.component";
 // Hooks
 import AppHook from "./hooks/app.hook";
 
@@ -14,14 +16,20 @@ function App() {
     handleFetchBoard,
     handleLevelClick,
     level,
+    timer,
+    win,
   } = AppHook();
+
+  if (!board) return null;
 
   return (
     <div className="relative flex flex-col w-full h-full bg-stone-900 border-4 border-stone-400">
       <Header
-        level={level}
+        board={board}
         handleLevelClick={handleLevelClick}
         handleFetchBoard={handleFetchBoard}
+        level={level}
+        timer={timer}
       />
       <LineSeparator />
       <Board
@@ -29,8 +37,10 @@ function App() {
         gameOver={gameOver}
         handleCellClick={handleCellClick}
         handleCellRightClick={handleCellRightClick}
+        level={level}
       ></Board>
-      {gameOver && <p className="font-press-start">¡Juego terminado!</p>}
+      {gameOver && <GameOver />}
+      {win && <Win />}
     </div>
   );
 }

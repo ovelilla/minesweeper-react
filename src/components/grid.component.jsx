@@ -1,9 +1,15 @@
 // Vendors
 import PropTypes from "prop-types";
 // Components
-import Orchestrator from "./Orchestrator";
+import Orchestrator from "./orchestrator.component";
 
-const Grid = ({ board, gameOver, handleCellClick, handleCellRightClick }) => {
+const Grid = ({
+  board,
+  gameOver,
+  handleCellClick,
+  handleCellRightClick,
+  level,
+}) => {
   const gridColumnsClass = {
     10: "grid-cols-10",
     25: "grid-cols-25",
@@ -24,6 +30,7 @@ const Grid = ({ board, gameOver, handleCellClick, handleCellRightClick }) => {
             gameOver={gameOver}
             handleCellClick={handleCellClick}
             handleCellRightClick={handleCellRightClick}
+            level={level}
           />
         ))
       )}
@@ -36,6 +43,7 @@ Grid.propTypes = {
   gameOver: PropTypes.bool.isRequired,
   handleCellClick: PropTypes.func.isRequired,
   handleCellRightClick: PropTypes.func.isRequired,
+  level: PropTypes.number.isRequired,
 };
 
 export default Grid;

@@ -1,20 +1,21 @@
 // Vendors
 import PropTypes from "prop-types";
 // Components
-import BlankTile from "./BlankTile";
-import FliagTile from "./FlaggedTile";
-import MineTile from "./MineTile";
-import NumberedTile from "./NumberedTile";
-import UnopenedTile from "./UnopenedTile";
+import BlankTile from "./blank-tile.component";
+import FliagTile from "./flagged-tile.component";
+import MineTile from "./mine-tile.component";
+import NumberedTile from "./numbered-tile.component";
+import UnopenedTile from "./unopened-tile.component";
 
 const Orchestrator = ({
   cell,
   gameOver,
   handleCellClick,
   handleCellRightClick,
+  level,
 }) => {
   if (gameOver && cell.hasMine) {
-    return <MineTile cell={cell} />;
+    return <MineTile cell={cell} level={level} />;
   }
 
   if (cell.defused && cell.getSurroundingMinesCount() === 0) {
@@ -22,7 +23,9 @@ const Orchestrator = ({
   }
 
   if (cell.defused) {
-    return <NumberedTile number={cell.getSurroundingMinesCount()} />;
+    return (
+      <NumberedTile level={level} number={cell.getSurroundingMinesCount()} />
+    );
   }
 
   if (cell.flagged) {
@@ -45,6 +48,7 @@ Orchestrator.propTypes = {
   gameOver: PropTypes.bool.isRequired,
   handleCellClick: PropTypes.func.isRequired,
   handleCellRightClick: PropTypes.func.isRequired,
+  level: PropTypes.number.isRequired,
 };
 
 export default Orchestrator;

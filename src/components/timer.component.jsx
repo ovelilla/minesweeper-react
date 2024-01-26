@@ -1,0 +1,18 @@
+// Vendors
+import PropTypes from "prop-types";
+// Utils
+import { formatTimer } from "../utils/format-timer.util";
+
+const Timer = ({ timer }) => {
+  return (
+    <div className="flex items-center px-4 md:px-6 lg:px-8 border md:border-2 lg:border-4 border-stone-500 border-r-stone-300 border-b-stone-300 bg-stone-950 text-white font-['vt323'] text-4xl md:text-5xl lg:text-6xl leading-none">
+      {formatTimer(timer)}
+    </div>
+  );
+};
+
+Timer.propTypes = {
+  timer: PropTypes.number.isRequired,
+};
+
+export default Timer;
